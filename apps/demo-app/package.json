@@ -1,0 +1,29 @@
+{
+  "name": "@ym-ui/uikit",
+  "version": "1.0.0",
+  "main": "next.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "private": "true",
+  "dependencies": {
+    "@ym-ui/uikit": "workspace:^0.1.0",
+    "next": "^15.3.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.6",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.8.3"
+  }
+}
