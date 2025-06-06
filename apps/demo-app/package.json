@@ -1,5 +1,5 @@
 {
-  "name": "@ym-ui/uikit",
+  "name": "demo-app",
   "version": "1.0.0",
   "main": "next.config.js",
   "scripts": {
