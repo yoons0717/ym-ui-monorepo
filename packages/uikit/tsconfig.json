@@ -11,6 +11,6 @@
     "outDir": "dist",
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "postcss.config.mjs"],
   "exclude": ["node_modules", "dist"]
 }

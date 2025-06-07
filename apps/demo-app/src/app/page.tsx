@@ -6,31 +6,9 @@ export default function Home() {
   return (
     <main className="min-h-screen p-8">
       <div className="max-w-2xl mx-auto space-y-8">
-        <h1 className="text-3xl font-bold text-gray-900">
+        <div className="text-3xl font-bold text-gray-900">
           hello world! UIKit Tailwind
-        </h1>
-
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">Tailwind v4 새로운 기능</h2>
-          <div className="bg-white p-4 rounded-lg shadow space-y-2">
-            <div className="@container">
-              <div className="@sm:bg-blue-100 @md:bg-green-100 p-2 rounded">
-                Container Query 테스트
-              </div>
-            </div>
-
-            <div className="bg-primary-500 text-white p-2 rounded">
-              v4 커스텀 색상 테스트
-            </div>
-          </div>
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">기본 HTML Button</h2>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
-            기본 HTML Button (v4)
-          </button>
-        </section>
+        </div>
 
         <section className="space-y-4">
           <h2 className="text-xl font-semibold">UIKit Buttons</h2>
@@ -38,6 +16,9 @@ export default function Home() {
             <Button variant="primary">Primary</Button>
             <Button variant="secondary">Secondary</Button>
             <Button variant="outline">Outline</Button>
+            <button className="bg-red-300 text-white hover:bg-blue-700 focus:ring-blue-500">
+              hello
+            </button>
           </div>
 
           <div className="flex gap-4 items-center flex-wrap">
