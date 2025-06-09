@@ -1,8 +1,11 @@
 "use client";
 
-import {Button} from "@ym-ui/uikit";
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from "@ym-ui/uikit";
+import {useState} from "react";
 
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <main className="min-h-screen p-8">
       <div className="max-w-2xl mx-auto space-y-8">
@@ -23,6 +26,17 @@ export default function Home() {
             <Button size="lg">Large</Button>
           </div>
         </section>
+        <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
+        <Modal open={isOpen} onClose={() => setIsOpen(false)} size="md">
+          <ModalHeader title="로그인" onClose={() => setIsOpen(false)} />
+          <ModalBody>hello</ModalBody>
+          <ModalFooter>
+            <Button variant="outline" onClick={() => setIsOpen(false)}>
+              취소
+            </Button>
+            <Button onClick={() => setIsOpen(false)}>로그인</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     </main>
   );
