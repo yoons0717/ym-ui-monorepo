@@ -169,21 +169,3 @@ function LoginForm() {
    ```bash
    pnpm --filter demo-app dev
    ```
-
-## 🏛 아키텍처 특징
-
-### Monorepo의 장점
-
-- **코드 공유**: 컴포넌트, 타입 정의, 유틸리티 재사용
-- **의존성 관리**: pnpm workspace로 중복 제거
-
-### 패키지 구성
-
-- **@ym-ui/uikit**: 핵심 UI 컴포넌트 라이브러리
-- **demo-app**: 실제 사용 예시와 테스트 환경
-- **storybook**: 컴포넌트 문서화 및 개발 도구
-
-### 빌드 최적화
-
-- **tsup**: TypeScript 라이브러리 전용 번들러
-- **Turborepo**: 병렬 빌드와 캐싱으로 빌드 시간 단축
