@@ -8,7 +8,15 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "test": "turbo run test",
-    "clean": "turbo run clean"
+    "clean": "turbo run clean",
+    "dev:notes": "pnpm --filter notes-app dev",
+    "dev:kanban": "pnpm --filter kanban-board dev",
+    "dev:storybook": "pnpm --filter storybook storybook",
+    "dev:all": "pnpm --filter notes-app --filter kanban-board --parallel dev",
+    "build:notes": "pnpm --filter notes-app build",
+    "build:kanban": "pnpm --filter kanban-board build",
+    "build:uikit": "pnpm --filter @workspace/uikit build",
+    "build:types": "pnpm --filter @workspace/types build"
   },
   "devDependencies": {
     "prettier": "^3.5.3",
