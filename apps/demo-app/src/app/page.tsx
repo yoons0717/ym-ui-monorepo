@@ -1,6 +1,12 @@
 "use client";
 
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from "@ym-ui/uikit";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@workspace/uikit";
 import {useState} from "react";
 
 export default function Home() {

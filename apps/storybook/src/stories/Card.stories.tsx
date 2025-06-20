@@ -6,9 +6,9 @@ import {
   CardFooter,
   Button,
   Input,
-} from "@ym-ui/uikit";
+} from "@workspace/uikit";
 
-import "@ym-ui/uikit/dist/index.css";
+import "@workspace/uikit/dist/index.css";
 
 const meta = {
   title: "Components/Card",

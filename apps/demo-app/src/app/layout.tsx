@@ -1,5 +1,5 @@
 import type {Metadata} from "next";
-import "@ym-ui/uikit/dist/index.css";
+import "@workspace/uikit/dist/index.css";
 
 export const metadata: Metadata = {
   title: "UIKit Tailwind v4 Test",

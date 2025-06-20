@@ -26,7 +26,7 @@ const config: StorybookConfig = {
     // monorepo workspace 패키지 최적화
     config.optimizeDeps = {
       ...config.optimizeDeps,
-      include: ["@ym-ui/uikit"],
+      include: ["@workspace/uikit"],
     };
     return config;
   },

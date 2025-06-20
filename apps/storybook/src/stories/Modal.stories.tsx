@@ -1,9 +1,14 @@
 import type {Meta} from "@storybook/react-vite";
-import {Modal, ModalHeader, ModalBody, ModalFooter} from "@ym-ui/uikit";
-import {Button} from "@ym-ui/uikit";
-import {Input} from "@ym-ui/uikit";
+import {
+  Button,
+  Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@workspace/uikit";
 import {useState} from "react";
-import "@ym-ui/uikit/dist/index.css";
+import "@workspace/uikit/dist/index.css";
 
 const meta = {
   title: "Components/Modal",

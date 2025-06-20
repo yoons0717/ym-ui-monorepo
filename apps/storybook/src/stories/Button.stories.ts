@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from "@storybook/react-vite";
-import {Button} from "@ym-ui/uikit";
-import "@ym-ui/uikit/dist/index.css";
+import {Button} from "@workspace/uikit";
+import "@workspace/uikit/dist/index.css";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
