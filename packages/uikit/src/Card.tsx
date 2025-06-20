@@ -8,7 +8,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(
+const CardBase = React.forwardRef<HTMLDivElement, CardProps>(
   (
     {
       variant = "default",
@@ -51,7 +51,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   }
 );
 
-Card.displayName = "Card";
+CardBase.displayName = "Card";
 
 export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -108,3 +108,10 @@ export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
 );
 
 CardFooter.displayName = "CardFooter";
+
+// Compound Component로 합쳐서 export
+export const Card = Object.assign(CardBase, {
+  Header: CardHeader,
+  Body: CardBody,
+  Footer: CardFooter,
+});

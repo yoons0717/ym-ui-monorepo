@@ -3,6 +3,7 @@ export interface Note {
   title: string;
   content: string;
   createdAt: Date;
+  updatedAt: Date;
   authorId: string;
   teamId?: string;
   isPublic: boolean;
