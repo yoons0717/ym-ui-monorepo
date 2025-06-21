@@ -1,4 +1,4 @@
-import type {Meta} from "@storybook/react-vite";
+import type { Meta } from "@storybook/react-vite";
 import {
   Button,
   Input,
@@ -7,7 +7,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@workspace/uikit";
-import {useState} from "react";
+import { useState } from "react";
 import "@workspace/uikit/dist/index.css";
 
 const meta = {
@@ -58,7 +58,7 @@ export const LoginModal = {
           <ModalHeader title="로그인" onClose={() => setIsOpen(false)} />
           <ModalBody>
             <div
-              style={{display: "flex", flexDirection: "column", gap: "1rem"}}
+              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
             >
               <Input label="이메일" placeholder="example@email.com" fullWidth />
               <Input

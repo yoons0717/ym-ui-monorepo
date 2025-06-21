@@ -1,9 +1,9 @@
 "use client";
 
-import {useState} from "react";
-import {Button, Card, Input} from "@workspace/uikit";
+import { useState } from "react";
+import { Button, Card, Input } from "@workspace/uikit";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function NewNotePage() {
   const router = useRouter();

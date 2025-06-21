@@ -114,7 +114,7 @@ pnpm --filter @ym-ui/uikit dev
 ### 기본 사용법
 
 ```tsx
-import {Button, Input, Card, Modal} from "@ym-ui/uikit";
+import { Button, Input, Card, Modal } from "@ym-ui/uikit";
 
 function LoginForm() {
   return (
@@ -150,7 +150,7 @@ function LoginForm() {
 
    ```typescript
    // packages/uikit/src/index.ts
-   export {NewComponent} from "./NewComponent";
+   export { NewComponent } from "./NewComponent";
    ```
 
 3. **빌드 및 테스트**

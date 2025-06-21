@@ -18,7 +18,7 @@ const CardBase = React.forwardRef<HTMLDivElement, CardProps>(
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     const baseClasses = "rounded-xl bg-white transition-colors";
 
@@ -40,7 +40,7 @@ const CardBase = React.forwardRef<HTMLDivElement, CardProps>(
       variantClasses[variant],
       paddingClasses[padding],
       fullWidth && "w-full",
-      className
+      className,
     );
 
     return (
@@ -48,7 +48,7 @@ const CardBase = React.forwardRef<HTMLDivElement, CardProps>(
         {children}
       </div>
     );
-  }
+  },
 );
 
 CardBase.displayName = "Card";
@@ -58,7 +58,7 @@ export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({className, children, ...props}, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -68,7 +68,7 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
         {children}
       </div>
     );
-  }
+  },
 );
 
 CardHeader.displayName = "CardHeader";
@@ -78,13 +78,13 @@ export interface CardBodyProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const CardBody = React.forwardRef<HTMLDivElement, CardBodyProps>(
-  ({className, children, ...props}, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
       <div ref={ref} className={clsx("mb-4", className)} {...props}>
         {children}
       </div>
     );
-  }
+  },
 );
 
 CardBody.displayName = "CardBody";
@@ -94,7 +94,7 @@ export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
-  ({className, children, ...props}, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -104,7 +104,7 @@ export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
         {children}
       </div>
     );
-  }
+  },
 );
 
 CardFooter.displayName = "CardFooter";

@@ -1,4 +1,4 @@
-import {clsx, type ClassValue} from "clsx";
+import { clsx, type ClassValue } from "clsx";
 
 /**
  * className을 조합하는 유틸리티 함수

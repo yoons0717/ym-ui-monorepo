@@ -9,7 +9,10 @@ export interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({variant = "primary", size = "md", className, children, ...props}, ref) => {
+  (
+    { variant = "primary", size = "md", className, children, ...props },
+    ref,
+  ) => {
     const baseClasses =
       "inline-flex items-center justify-center rounded-xl font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
@@ -31,7 +34,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       baseClasses,
       variantClasses[variant],
       sizeClasses[size],
-      className
+      className,
     );
 
     return (
@@ -39,7 +42,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

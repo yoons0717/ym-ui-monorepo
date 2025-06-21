@@ -1,4 +1,4 @@
-import {Button} from "@workspace/uikit";
+import { Button } from "@workspace/uikit";
 import Link from "next/link";
 
 export default function HomePage() {

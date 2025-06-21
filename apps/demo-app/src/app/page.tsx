@@ -7,7 +7,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@workspace/uikit";
-import {useState} from "react";
+import { useState } from "react";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);

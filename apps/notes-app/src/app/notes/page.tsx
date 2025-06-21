@@ -1,10 +1,10 @@
 "use client";
 
-import {useState, useEffect} from "react";
-import {Note} from "@workspace/types";
-import {Card, Button} from "@workspace/uikit";
+import { useState, useEffect } from "react";
+import { Note } from "@workspace/types";
+import { Card, Button } from "@workspace/uikit";
 import Link from "next/link";
-import {supabase} from "@/lib/supabase";
+import { supabase } from "@/lib/supabase";
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -16,10 +16,10 @@ export default function NotesPage() {
     async function fetchNotes() {
       try {
         setLoading(true);
-        const {data, error} = await supabase
+        const { data, error } = await supabase
           .from("notes")
           .select("*")
-          .order("created_at", {ascending: false});
+          .order("created_at", { ascending: false });
 
         if (error) {
           throw error;

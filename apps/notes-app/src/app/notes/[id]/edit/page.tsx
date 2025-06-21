@@ -1,11 +1,11 @@
 "use client";
 
-import {useState, useEffect} from "react";
-import {Note} from "@workspace/types";
-import {Button, Card, Input} from "@workspace/uikit";
+import { useState, useEffect } from "react";
+import { Note } from "@workspace/types";
+import { Button, Card, Input } from "@workspace/uikit";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
-import {notFound} from "next/navigation";
+import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 
 // 임시 데이터 (기존과 동일)
 const mockNotes: Note[] = [
@@ -89,10 +89,10 @@ const mockNotes: Note[] = [
 ];
 
 interface PageProps {
-  params: {id: string};
+  params: { id: string };
 }
 
-export default function EditNotePage({params}: PageProps) {
+export default function EditNotePage({ params }: PageProps) {
   const router = useRouter();
   const originalNote = mockNotes.find((n) => n.id === params.id);
 

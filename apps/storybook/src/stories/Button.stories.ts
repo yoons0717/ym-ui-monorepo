@@ -1,5 +1,5 @@
-import type {Meta, StoryObj} from "@storybook/react-vite";
-import {Button} from "@workspace/uikit";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "@workspace/uikit";
 import "@workspace/uikit/dist/index.css";
 
 const meta: Meta<typeof Button> = {
@@ -11,11 +11,11 @@ const meta: Meta<typeof Button> = {
   tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: {type: "select"},
+      control: { type: "select" },
       options: ["primary", "secondary", "outline"],
     },
     size: {
-      control: {type: "select"},
+      control: { type: "select" },
       options: ["sm", "md", "lg"],
     },
   },

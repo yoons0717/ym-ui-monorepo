@@ -1,7 +1,7 @@
-import {Note} from "@workspace/types";
-import {Button, Card} from "@workspace/uikit";
+import { Note } from "@workspace/types";
+import { Button, Card } from "@workspace/uikit";
 import Link from "next/link";
-import {notFound} from "next/navigation";
+import { notFound } from "next/navigation";
 
 // 임시 데이터 (나중에 API로 대체)
 const mockNotes: Note[] = [
@@ -85,10 +85,10 @@ const mockNotes: Note[] = [
 ];
 
 interface PageProps {
-  params: {id: string};
+  params: { id: string };
 }
 
-export default function NotePage({params}: PageProps) {
+export default function NotePage({ params }: PageProps) {
   const note = mockNotes.find((n) => n.id === params.id);
 
   if (!note) {

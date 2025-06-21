@@ -1,4 +1,4 @@
-import type {Meta, StoryObj} from "@storybook/react-vite";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Card,
   CardHeader,
@@ -19,11 +19,11 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: {type: "select"},
+      control: { type: "select" },
       options: ["default", "outlined", "elevated"],
     },
     padding: {
-      control: {type: "select"},
+      control: { type: "select" },
       options: ["none", "sm", "md", "lg"],
     },
   },
@@ -54,24 +54,24 @@ export const Elevated: Story = {
 
 export const WithCompoundComponents = {
   render: () => (
-    <Card variant="elevated" style={{width: "400px"}}>
+    <Card variant="elevated" style={{ width: "400px" }}>
       <CardHeader>
-        <h3 style={{margin: 0, fontSize: "1.25rem", fontWeight: "600"}}>
+        <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: "600" }}>
           로그인
         </h3>
       </CardHeader>
       <CardBody>
-        <div style={{display: "flex", flexDirection: "column", gap: "1rem"}}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <Input label="이메일" placeholder="example@email.com" />
           <Input label="비밀번호" type="password" placeholder="••••••••" />
         </div>
       </CardBody>
       <CardFooter>
-        <div style={{display: "flex", gap: "0.5rem"}}>
-          <Button variant="outline" style={{flex: 1}}>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <Button variant="outline" style={{ flex: 1 }}>
             취소
           </Button>
-          <Button variant="primary" style={{flex: 1}}>
+          <Button variant="primary" style={{ flex: 1 }}>
             로그인
           </Button>
         </div>
@@ -82,11 +82,11 @@ export const WithCompoundComponents = {
 
 export const PaddingVariants = {
   render: () => (
-    <div style={{display: "flex", gap: "1rem", flexWrap: "wrap"}}>
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
       <Card padding="sm">Small Padding</Card>
       <Card padding="md">Medium Padding</Card>
       <Card padding="lg">Large Padding</Card>
-      <Card padding="none" style={{border: "1px solid #e5e7eb"}}>
+      <Card padding="none" style={{ border: "1px solid #e5e7eb" }}>
         No Padding
       </Card>
     </div>

@@ -1,5 +1,5 @@
-import type {Meta, StoryObj} from "@storybook/react-vite";
-import {Input} from "@workspace/uikit";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Input } from "@workspace/uikit";
 import "@workspace/uikit/dist/index.css";
 
 const meta: Meta<typeof Input> = {
@@ -11,7 +11,7 @@ const meta: Meta<typeof Input> = {
   tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: {type: "select"},
+      control: { type: "select" },
       options: ["default", "error"],
     },
   },

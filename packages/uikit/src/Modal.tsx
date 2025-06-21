@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {createPortal} from "react-dom";
+import React, { useEffect } from "react";
+import { createPortal } from "react-dom";
 import clsx from "clsx";
 
 export interface ModalProps {
@@ -25,7 +25,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
       title,
       className,
     },
-    ref
+    ref,
   ) => {
     // ESC 키 처리
     useEffect(() => {
@@ -87,7 +87,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
           className={clsx(
             "relative z-10 bg-white rounded-xl shadow-xl max-h-[90vh] overflow-y-auto mx-4 w-full",
             sizeClasses[size],
-            className
+            className,
           )}
           role="dialog"
           aria-modal="true"
@@ -99,7 +99,7 @@ export const Modal = React.forwardRef<HTMLDivElement, ModalProps>(
     );
 
     return createPortal(modalContent, document.body);
-  }
+  },
 );
 
 Modal.displayName = "Modal";
@@ -114,13 +114,13 @@ export interface ModalHeaderProps {
 }
 
 export const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
-  ({showCloseButton = true, onClose, title, children, className}, ref) => {
+  ({ showCloseButton = true, onClose, title, children, className }, ref) => {
     return (
       <div
         ref={ref}
         className={clsx(
           "flex items-center justify-between p-6 border-b border-gray-200",
-          className
+          className,
         )}
       >
         <div className="flex-1">
@@ -158,7 +158,7 @@ export const ModalHeader = React.forwardRef<HTMLDivElement, ModalHeaderProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 ModalHeader.displayName = "ModalHeader";
@@ -170,13 +170,13 @@ export interface ModalBodyProps {
 }
 
 export const ModalBody = React.forwardRef<HTMLDivElement, ModalBodyProps>(
-  ({children, className}, ref) => {
+  ({ children, className }, ref) => {
     return (
       <div ref={ref} className={clsx("p-6", className)}>
         {children}
       </div>
     );
-  }
+  },
 );
 
 ModalBody.displayName = "ModalBody";
@@ -188,19 +188,19 @@ export interface ModalFooterProps {
 }
 
 export const ModalFooter = React.forwardRef<HTMLDivElement, ModalFooterProps>(
-  ({children, className}, ref) => {
+  ({ children, className }, ref) => {
     return (
       <div
         ref={ref}
         className={clsx(
           "flex items-center justify-end gap-3 p-6 border-t border-gray-200 bg-gray-50 rounded-b-xl",
-          className
+          className,
         )}
       >
         {children}
       </div>
     );
-  }
+  },
 );
 
 ModalFooter.displayName = "ModalFooter";

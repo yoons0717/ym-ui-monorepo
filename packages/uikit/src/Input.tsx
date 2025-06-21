@@ -27,7 +27,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       id,
       ...props
     },
-    ref
+    ref,
   ) => {
     // 고유 ID 생성 (label과 연결용)
     const inputId = id || React.useId();
@@ -49,7 +49,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       baseClasses,
       variantClasses[isError ? "error" : "default"],
       fullWidth && "w-full",
-      className
+      className,
     );
 
     return (
@@ -76,7 +76,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";
