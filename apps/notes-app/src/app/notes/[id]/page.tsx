@@ -1,95 +1,96 @@
-import { Note } from "@workspace/types";
-import { Button, Card } from "@workspace/uikit";
-import Link from "next/link";
-import { notFound } from "next/navigation";
+'use client';
 
-// 임시 데이터 (나중에 API로 대체)
-const mockNotes: Note[] = [
-  {
-    id: "1",
-    title: "프로젝트 기획서 - Q1 로드맵",
-    content: `# 프로젝트 기획서 - Q1 로드맵
-
-## 프로젝트 개요
-새로운 프로젝트의 기획 내용을 정리합니다. 주요 기능과 일정, 리소스 계획을 포함하여 전체적인 방향성을 제시합니다.
-
-## 주요 기능
-1. **사용자 관리 시스템**
-   - 회원가입/로그인
-   - 프로필 관리
-   - 권한 설정
-
-2. **실시간 협업 도구**
-   - 노트 공동 편집
-   - 실시간 채팅
-   - 버전 관리
-
-3. **프로젝트 관리**
-   - 칸반보드
-   - 일정 관리
-   - 진행률 추적
-
-## 일정 계획
-- **1월**: 기반 시스템 구축
-- **2월**: 핵심 기능 개발  
-- **3월**: 테스트 및 최적화
-
-## 리소스 계획
-- 개발자 3명
-- 디자이너 1명
-- PM 1명`,
-    createdAt: new Date("2025-01-01"),
-    updatedAt: new Date("2025-01-15"),
-    authorId: "user1",
-    isPublic: false,
-    tags: ["기획", "프로젝트", "Q1"],
-  },
-  {
-    id: "2",
-    title: "개발팀 회의록 - 1월 15일",
-    content: `# 개발팀 회의록 - 1월 15일
-
-## 참석자
-- 김개발 (팀장)
-- 이코딩 (시니어 개발자)
-- 박프론트 (프론트엔드 개발자)
-- 최백엔드 (백엔드 개발자)
-
-## 주요 논의사항
-
-### 1. 이번 스프린트 진행 현황
-- 사용자 인증 모듈: 90% 완료
-- API 설계: 80% 완료
-- 프론트엔드 컴포넌트: 70% 완료
-
-### 2. 발견된 이슈
-- 데이터베이스 성능 최적화 필요
-- 모바일 반응형 디자인 개선 필요
-- 테스트 코드 커버리지 부족
-
-### 3. 다음 스프린트 계획
-- 실시간 기능 구현 시작
-- 성능 최적화 작업
-- 테스트 코드 보강
-
-## 액션 아이템
-- [ ] 데이터베이스 인덱스 최적화 (최백엔드, ~1/20)
-- [ ] 모바일 UI 개선 (박프론트, ~1/25)  
-- [ ] 테스트 코드 작성 (전체팀, ~1/30)`,
-    createdAt: new Date("2025-01-15"),
-    updatedAt: new Date("2025-01-15"),
-    authorId: "user2",
-    isPublic: true,
-    tags: ["회의", "개발팀", "스프린트"],
-  },
-];
+import { useState, useEffect, use } from 'react';
+import { Note } from '@workspace/types';
+import { Button, Card } from '@workspace/uikit';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { supabase } from '@/lib/supabase';
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default function NotePage({ params }: PageProps) {
-  const note = mockNotes.find((n) => n.id === params.id);
+  const [note, setNote] = useState<Note | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { id } = use(params);
+
+  // Supabase에서 노트 불러오기
+  useEffect(() => {
+    async function fetchNote() {
+      try {
+        setLoading(true);
+        const { data } = await supabase
+          .from('notes')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        // Supabase 데이터를 Note 타입으로 변환
+        const transformedNote: Note = {
+          id: data.id,
+          title: data.title,
+          content: data.content,
+          createdAt: new Date(data.created_at),
+          updatedAt: new Date(data.updated_at),
+          authorId: data.author_id,
+          isPublic: data.is_public,
+          tags: data.tags || [],
+        };
+
+        setNote(transformedNote);
+      } catch (err) {
+        console.error('노트를 불러오는 중 오류:', err);
+        setError('노트를 불러올 수 없습니다.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNote();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div className="text-center">
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
+          <p className="text-slate-600">노트를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <Card variant="default" padding="lg" className="max-w-md text-center">
+          <svg
+            className="mx-auto mb-4 h-16 w-16 text-red-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <h2 className="mb-2 text-xl font-semibold text-slate-900">
+            오류 발생
+          </h2>
+          <p className="mb-6 text-slate-600">{error}</p>
+          <Link href="/notes">
+            <Button variant="primary">목록으로 돌아가기</Button>
+          </Link>
+        </Card>
+      </div>
+    );
+  }
 
   if (!note) {
     notFound();
@@ -98,12 +99,12 @@ export default function NotePage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Navigation */}
-      <nav className="bg-white border-b border-slate-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <nav className="border-b border-slate-200 bg-white px-6 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between">
           <div className="flex items-center space-x-4">
             <Link href="/" className="flex items-center space-x-4">
-              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-                <span className="text-white font-bold text-sm">N</span>
+              <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-600">
+                <span className="text-sm font-bold text-white">N</span>
               </div>
               <h1 className="text-xl font-semibold text-slate-800">Notes</h1>
             </Link>
@@ -115,7 +116,7 @@ export default function NotePage({ params }: PageProps) {
                 모든 노트
               </Link>
               <span>/</span>
-              <span className="text-slate-900 truncate max-w-[200px]">
+              <span className="max-w-[200px] truncate text-slate-900">
                 {note.title}
               </span>
             </div>
@@ -135,21 +136,21 @@ export default function NotePage({ params }: PageProps) {
       </nav>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-6 py-8">
+      <div className="mx-auto max-w-4xl px-6 py-8">
         <Card variant="default" padding="none" className="mb-8">
           {/* Note Header */}
           <Card.Header className="p-8 pb-6">
-            <div className="flex items-start justify-between mb-6">
+            <div className="mb-6 flex items-start justify-between">
               <div className="flex-1">
-                <h1 className="text-3xl font-bold text-slate-900 mb-4">
+                <h1 className="mb-4 text-3xl font-bold text-slate-900">
                   {note.title}
                 </h1>
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {note.tags?.map((tag) => (
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {note.tags?.map(tag => (
                     <span
                       key={tag}
-                      className="inline-flex items-center px-3 py-1 text-sm font-medium bg-blue-50 text-blue-700 rounded-full"
+                      className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700"
                     >
                       {tag}
                     </span>
@@ -157,15 +158,15 @@ export default function NotePage({ params }: PageProps) {
                 </div>
               </div>
 
-              <div className="flex items-center space-x-2 ml-6">
+              <div className="ml-6 flex items-center space-x-2">
                 {note.isPublic ? (
                   <div className="flex items-center space-x-2 text-sm text-green-600">
-                    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                    <div className="h-2 w-2 rounded-full bg-green-400"></div>
                     <span>공개</span>
                   </div>
                 ) : (
                   <div className="flex items-center space-x-2 text-sm text-slate-500">
-                    <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
+                    <div className="h-2 w-2 rounded-full bg-slate-400"></div>
                     <span>비공개</span>
                   </div>
                 )}
@@ -175,18 +176,11 @@ export default function NotePage({ params }: PageProps) {
             <div className="flex items-center justify-between text-sm text-slate-500">
               <div className="flex items-center space-x-6">
                 <span className="flex items-center space-x-2">
-                  <div className="w-6 h-6 bg-slate-300 rounded-full"></div>
+                  <div className="h-6 w-6 rounded-full bg-slate-300"></div>
                   <span>작성자</span>
                 </span>
-                <span>생성: {note.createdAt.toLocaleDateString("ko-KR")}</span>
-                <span>수정: {note.updatedAt.toLocaleDateString("ko-KR")}</span>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <span className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-green-600">2명이 보는 중</span>
-                </span>
+                <span>생성: {note.createdAt.toLocaleDateString('ko-KR')}</span>
+                <span>수정: {note.updatedAt.toLocaleDateString('ko-KR')}</span>
               </div>
             </div>
           </Card.Header>
@@ -194,7 +188,7 @@ export default function NotePage({ params }: PageProps) {
           {/* Note Content */}
           <Card.Body className="p-8 pt-0">
             <div className="prose prose-slate max-w-none">
-              <pre className="whitespace-pre-wrap font-sans text-slate-700 leading-relaxed">
+              <pre className="whitespace-pre-wrap font-sans leading-relaxed text-slate-700">
                 {note.content}
               </pre>
             </div>
@@ -202,7 +196,7 @@ export default function NotePage({ params }: PageProps) {
         </Card>
 
         {/* Actions */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <Link href="/notes">
             <Button variant="outline">← 목록으로</Button>
           </Link>
