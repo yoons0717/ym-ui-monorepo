@@ -6,6 +6,10 @@ import { Card, Button } from '@workspace/uikit';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { Navigation } from '@/components/Navigation';
+import PageContainer from '@/components/PageContainer';
+import PageContent from '@/components/PageContent';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { ErrorCard } from '@/components/ErrorCard';
 
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
@@ -65,14 +69,22 @@ export default function NotesPage() {
     </>
   );
 
+  if (loading) {
+    return <LoadingSpinner message="노트를 불러오는 중..." />;
+  }
+
+  if (error) {
+    return <ErrorCard message={error} />;
+  }
+
   return (
-    <div className="min-h-screen bg-slate-50">
+    <PageContainer>
       <Navigation
         breadcrumbs={[{ label: '모든 노트' }]}
         actions={navigationActions}
       />
 
-      <div className="mx-auto max-w-7xl px-6 py-8">
+      <PageContent>
         {/* Header */}
         <div className="mb-8 flex items-center justify-between">
           <div>
@@ -106,46 +118,6 @@ export default function NotesPage() {
             </div>
           </div>
         </div>
-
-        {/* Loading State */}
-        {loading && (
-          <div className="py-16 text-center">
-            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-            <p className="text-slate-600">노트를 불러오는 중...</p>
-          </div>
-        )}
-
-        {/* Error State */}
-        {error && (
-          <Card
-            variant="default"
-            padding="md"
-            className="mb-8 border-red-200 bg-red-50"
-          >
-            <div className="flex items-center space-x-3">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-red-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h4 className="text-sm font-medium text-red-900">오류 발생</h4>
-                <p className="text-sm text-red-800">{error}</p>
-              </div>
-            </div>
-          </Card>
-        )}
-
         {/* Notes Grid */}
         {!loading && !error && (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -213,7 +185,6 @@ export default function NotesPage() {
             ))}
           </div>
         )}
-
         {/* Empty State */}
         {!loading && !error && notes.length === 0 && (
           <Card className="py-16 text-center">
@@ -241,7 +212,7 @@ export default function NotesPage() {
             </Link>
           </Card>
         )}
-      </div>
-    </div>
+      </PageContent>
+    </PageContainer>
   );
 }

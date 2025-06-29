@@ -9,6 +9,8 @@ import { supabase } from '@/lib/supabase';
 import { Navigation } from '@/components/Navigation';
 import PageContent from '@/components/PageContent';
 import PageContainer from '@/components/PageContainer';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { ErrorCard } from '@/components/ErrorCard';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -20,16 +22,31 @@ export default function NotePage({ params }: PageProps) {
   const [error, setError] = useState<string | null>(null);
   const { id } = use(params);
 
-  // Supabase에서 노트 불러오기
   useEffect(() => {
-    async function fetchNote() {
+    async function fetchNote(): Promise<void> {
       try {
         setLoading(true);
-        const { data } = await supabase
+        setError(null);
+
+        const { data, error } = await supabase
           .from('notes')
           .select('*')
           .eq('id', id)
           .single();
+
+        // 에러 처리
+        if (error) {
+          if (error.code === 'PGRST116') {
+            // 노트를 찾을 수 없음
+            notFound();
+          }
+          throw error;
+        }
+
+        // data가 null인 경우 처리
+        if (!data) {
+          notFound();
+        }
 
         // Supabase 데이터를 Note 타입으로 변환
         const transformedNote: Note = {
@@ -46,7 +63,11 @@ export default function NotePage({ params }: PageProps) {
         setNote(transformedNote);
       } catch (err) {
         console.error('노트를 불러오는 중 오류:', err);
-        setError('노트를 불러올 수 없습니다.');
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('노트를 불러올 수 없습니다.');
+        }
       } finally {
         setLoading(false);
       }
@@ -56,42 +77,12 @@ export default function NotePage({ params }: PageProps) {
   }, [id]);
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50">
-        <div className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-          <p className="text-slate-600">노트를 불러오는 중...</p>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner message="노트를 불러오는 중..." />;
   }
 
   if (error) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50">
-        <Card variant="default" padding="lg" className="max-w-md text-center">
-          <svg
-            className="mx-auto mb-4 h-16 w-16 text-red-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <h2 className="mb-2 text-xl font-semibold text-slate-900">
-            오류 발생
-          </h2>
-          <p className="mb-6 text-slate-600">{error}</p>
-          <Link href="/notes">
-            <Button variant="primary">목록으로 돌아가기</Button>
-          </Link>
-        </Card>
-      </div>
+      <ErrorCard message={error} onRetry={() => window.location.reload()} />
     );
   }
 
