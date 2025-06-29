@@ -1,40 +1,31 @@
-import { Button } from "@workspace/uikit";
-import Link from "next/link";
+import { Navigation } from '@/components/Navigation';
+import PageContainer from '@/components/PageContainer';
+import PageContent from '@/components/PageContent';
+import { Button } from '@workspace/uikit';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-slate-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center">
-              <span className="text-white font-bold text-sm">N</span>
-            </div>
-            <h1 className="text-xl font-semibold text-slate-800">Notes</h1>
-          </div>
-
-          <div className="flex items-center space-x-3">
+    <PageContainer>
+      <Navigation
+        actions={
+          <>
             <Link href="/notes">
-              <Button variant="outline" size="md">
-                모든 노트
-              </Button>
+              <Button variant="outline">모든 노트</Button>
             </Link>
             <Link href="/notes/new">
-              <Button variant="primary" size="md">
-                새 노트
-              </Button>
+              <Button variant="primary">새 노트</Button>
             </Link>
-          </div>
-        </div>
-      </nav>
+          </>
+        }
+      />
 
-      <div className="max-w-4xl mx-auto px-6 py-16">
+      <PageContent>
         <div className="text-center">
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">
+          <h2 className="mb-4 text-4xl font-bold text-slate-900">
             팀과 함께하는 스마트 노트
           </h2>
-          <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto">
+          <p className="mx-auto mb-12 max-w-2xl text-xl text-slate-600">
             실시간 협업으로 아이디어를 공유하고, 체계적으로 정리하세요. 언제
             어디서나 팀과 연결되어 있습니다.
           </p>
@@ -54,11 +45,11 @@ export default function HomePage() {
         </div>
 
         {/* Features Grid */}
-        <div className="mt-20 grid md:grid-cols-3 gap-8">
-          <div className="bg-white rounded-lg p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
+        <div className="mt-20 grid gap-8 md:grid-cols-3">
+          <div className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
               <svg
-                className="w-6 h-6 text-blue-600"
+                className="h-6 w-6 text-blue-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -71,19 +62,19 @@ export default function HomePage() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-3">
+            <h3 className="mb-3 text-xl font-semibold text-slate-900">
               실시간 편집
             </h3>
-            <p className="text-slate-600 leading-relaxed">
+            <p className="leading-relaxed text-slate-600">
               여러 사용자가 동시에 노트를 편집하고 즉시 변경사항을 확인할 수
               있습니다.
             </p>
           </div>
 
-          <div className="bg-white rounded-lg p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-6">
+          <div className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-green-100">
               <svg
-                className="w-6 h-6 text-green-600"
+                className="h-6 w-6 text-green-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -96,18 +87,18 @@ export default function HomePage() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-3">
+            <h3 className="mb-3 text-xl font-semibold text-slate-900">
               팀 협업
             </h3>
-            <p className="text-slate-600 leading-relaxed">
+            <p className="leading-relaxed text-slate-600">
               팀별로 노트를 관리하고 세밀한 권한 설정으로 안전하게 협업하세요.
             </p>
           </div>
 
-          <div className="bg-white rounded-lg p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-6">
+          <div className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-100">
               <svg
-                className="w-6 h-6 text-purple-600"
+                className="h-6 w-6 text-purple-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -120,15 +111,15 @@ export default function HomePage() {
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-slate-900 mb-3">
+            <h3 className="mb-3 text-xl font-semibold text-slate-900">
               스마트 태그
             </h3>
-            <p className="text-slate-600 leading-relaxed">
+            <p className="leading-relaxed text-slate-600">
               태그로 노트를 체계적으로 분류하고 빠르게 원하는 내용을 찾으세요.
             </p>
           </div>
         </div>
-      </div>
-    </div>
+      </PageContent>
+    </PageContainer>
   );
 }

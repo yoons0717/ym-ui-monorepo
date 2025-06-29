@@ -7,6 +7,9 @@ import Link from 'next/link';
 import { notFound, useRouter } from 'next/navigation';
 
 import { useEditNote } from '@/hooks/useEditNote';
+import { Navigation } from '@/components/Navigation';
+import PageContainer from '@/components/PageContainer';
+import PageContent from '@/components/PageContent';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -124,67 +127,42 @@ export default function EditNotePage({ params }: PageProps) {
     notFound();
   }
 
+  const navigationActions = (
+    <>
+      {hasUnsavedChanges && (
+        <span className="flex items-center space-x-2 text-sm text-amber-600">
+          <div className="h-2 w-2 animate-pulse rounded-full bg-amber-400"></div>
+          <span>저장되지 않음</span>
+        </span>
+      )}
+
+      <Button variant="outline" onClick={handleCancel} disabled={isSaving}>
+        취소
+      </Button>
+
+      <Button
+        variant="primary"
+        onClick={handleSave}
+        disabled={isSaving || !hasUnsavedChanges || !title.trim()}
+      >
+        {isSaving ? '저장 중...' : '저장'}
+      </Button>
+    </>
+  );
+
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Navigation */}
-      <nav className="border-b border-slate-200 bg-white px-6 py-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/" className="flex items-center space-x-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-600">
-                <span className="text-sm font-bold text-white">N</span>
-              </div>
-              <h1 className="text-xl font-semibold text-slate-800">Notes</h1>
-            </Link>
-
-            <div className="flex items-center space-x-2 text-sm text-slate-500">
-              <span>/</span>
-              <Link href="/notes" className="hover:text-slate-700">
-                모든 노트
-              </Link>
-              <span>/</span>
-              <Link
-                href={`/notes/${id}`}
-                className="max-w-[150px] truncate hover:text-slate-700"
-              >
-                {originalNote.title}
-              </Link>
-              <span>/</span>
-              <span className="text-slate-900">편집</span>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            {hasUnsavedChanges && (
-              <span className="flex items-center space-x-2 text-sm text-amber-600">
-                <div className="h-2 w-2 animate-pulse rounded-full bg-amber-400"></div>
-                <span>저장되지 않음</span>
-              </span>
-            )}
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleCancel}
-              disabled={isSaving}
-            >
-              취소
-            </Button>
-
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={handleSave}
-              disabled={isSaving || !hasUnsavedChanges || !title.trim()}
-            >
-              {isSaving ? '저장 중...' : '저장'}
-            </Button>
-          </div>
-        </div>
-      </nav>
+    <PageContainer>
+      <Navigation
+        breadcrumbs={[
+          { label: '모든 노트', href: '/notes' },
+          { label: originalNote.title, href: `/notes/${id}` },
+          { label: '편집' },
+        ]}
+        actions={navigationActions}
+      />
 
       {/* Main Content */}
-      <div className="mx-auto max-w-4xl px-6 py-8">
+      <PageContent>
         <form
           onSubmit={e => {
             e.preventDefault();
@@ -396,7 +374,7 @@ export default function EditNotePage({ params }: PageProps) {
             </div>
           </div>
         </form>
-      </div>
-    </div>
+      </PageContent>
+    </PageContainer>
   );
 }

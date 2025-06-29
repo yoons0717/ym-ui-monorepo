@@ -6,6 +6,9 @@ import { Button, Card } from '@workspace/uikit';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { Navigation } from '@/components/Navigation';
+import PageContent from '@/components/PageContent';
+import PageContainer from '@/components/PageContainer';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -96,47 +99,26 @@ export default function NotePage({ params }: PageProps) {
     notFound();
   }
 
+  const navigationActions = (
+    <>
+      <Button variant="outline">공유</Button>
+      <Link href={`/notes/${note.id}/edit`}>
+        <Button variant="primary">편집</Button>
+      </Link>
+    </>
+  );
+
   return (
-    <div className="min-h-screen bg-slate-50">
-      {/* Navigation */}
-      <nav className="border-b border-slate-200 bg-white px-6 py-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Link href="/" className="flex items-center space-x-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded bg-blue-600">
-                <span className="text-sm font-bold text-white">N</span>
-              </div>
-              <h1 className="text-xl font-semibold text-slate-800">Notes</h1>
-            </Link>
+    <PageContainer>
+      <Navigation
+        breadcrumbs={[
+          { label: '모든 노트', href: '/notes' },
+          { label: note.title },
+        ]}
+        actions={navigationActions}
+      />
 
-            {/* Breadcrumb */}
-            <div className="flex items-center space-x-2 text-sm text-slate-500">
-              <span>/</span>
-              <Link href="/notes" className="hover:text-slate-700">
-                모든 노트
-              </Link>
-              <span>/</span>
-              <span className="max-w-[200px] truncate text-slate-900">
-                {note.title}
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <Button variant="outline" size="sm">
-              공유
-            </Button>
-            <Link href={`/notes/${note.id}/edit`}>
-              <Button variant="primary" size="sm">
-                편집
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <div className="mx-auto max-w-4xl px-6 py-8">
+      <PageContent>
         <Card variant="default" padding="none" className="mb-8">
           {/* Note Header */}
           <Card.Header className="p-8 pb-6">
@@ -209,7 +191,7 @@ export default function NotePage({ params }: PageProps) {
             </Link>
           </div>
         </div>
-      </div>
-    </div>
+      </PageContent>
+    </PageContainer>
   );
 }
