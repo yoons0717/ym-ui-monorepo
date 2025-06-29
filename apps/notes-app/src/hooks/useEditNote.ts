@@ -52,13 +52,18 @@ export function useEditNote(noteId: string) {
         setContent(transformedNote.content);
         setTags(transformedNote.tags || []);
         setIsPublic(transformedNote.isPublic);
-      } catch (err: any) {
-        console.error('노트를 불러오는 중 오류:', err);
-        setError(
-          err.message === 'NOT_FOUND'
-            ? 'NOT_FOUND'
-            : '노트를 불러올 수 없습니다.'
-        );
+      } catch (err: unknown) {
+        console.error('노트 불러기 중 중 오류:', err);
+
+        if (err instanceof Error) {
+          setError(
+            err.message === 'NOT_FOUND'
+              ? 'NOT_FOUND'
+              : '노트를 불러올 수 없습니다.'
+          );
+        } else {
+          setError('알 수 없는 오류가 발생했습니다.');
+        }
       } finally {
         setLoading(false);
       }
@@ -69,15 +74,28 @@ export function useEditNote(noteId: string) {
 
   // 변경사항 감지
   useEffect(() => {
-    if (originalNote) {
-      const hasChanges =
-        title !== originalNote.title ||
-        content !== originalNote.content ||
-        JSON.stringify(tags.sort()) !==
-          JSON.stringify((originalNote.tags || []).sort()) ||
-        isPublic !== originalNote.isPublic;
-      setHasUnsavedChanges(hasChanges);
+    if (!originalNote) {
+      setHasUnsavedChanges(false);
+      return;
     }
+
+    const currentData = {
+      title: title.trim(),
+      content: content.trim(),
+      isPublic,
+      tags: [...tags].sort(),
+    };
+
+    const originalData = {
+      title: originalNote.title,
+      content: originalNote.content,
+      isPublic: originalNote.isPublic,
+      tags: [...(originalNote.tags || [])].sort(),
+    };
+
+    const hasChanges =
+      JSON.stringify(currentData) !== JSON.stringify(originalData);
+    setHasUnsavedChanges(hasChanges);
   }, [title, content, tags, isPublic, originalNote]);
 
   // 저장 함수
@@ -108,9 +126,15 @@ export function useEditNote(noteId: string) {
 
       setHasUnsavedChanges(false);
       return true;
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('노트 저장 중 오류:', err);
-      setError(err.message || '노트를 저장할 수 없습니다.');
+
+      if (err instanceof Error) {
+        setError(err.message || '노트를 저장할 수 없습니다.');
+      } else {
+        setError('노트를 저장할 수 없습니다.');
+      }
+
       return false;
     } finally {
       setIsSaving(false);
